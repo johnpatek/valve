@@ -1,0 +1,14 @@
+namespace valve.protocol.internal;
+
+enum request_type: int 
+{
+
+}
+
+
+
+enum response_type : int
+{
+    OkResponse,
+    ErrorResponse    
+}

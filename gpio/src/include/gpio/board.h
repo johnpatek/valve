@@ -1,5 +1,9 @@
+#ifndef __VALVE_GPIO_BOARD_H__
+#define __VALVE_GPIO_BOARD_H__
+
 #include <atomic>
-#include <map>
+#include <stdexcept>
+#include <string>
 
 namespace valve
 {
@@ -37,3 +41,5 @@ namespace gpio
 }
 
 }
+
+#endif
