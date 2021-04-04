@@ -13,6 +13,12 @@
 [submodule "extern/libevent"]
 	path = extern/libevent
 	url = https://github.com/libevent/libevent.git
-[submodule "extern/flatbuffers"]
-	path = extern/flatbuffers
-	url = https://github.com/google/flatbuffers
+[submodule "rpi-gpio"]
+	path = extern/rpi-gpio
+	url = https://github.com/johnpatek/rpi-gpio
+[submodule "extern/jsoncpp"]
+	path = extern/jsoncpp
+	url = https://github.com/open-source-parsers/jsoncpp
+[submodule "extern/toml11"]
+	path = extern/toml11
+	url = https://github.com/ToruNiina/toml11
