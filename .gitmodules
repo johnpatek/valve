@@ -1,0 +1,18 @@
+[submodule "extern/cryptopp"]
+	path = extern/cryptopp
+	url = https://github.com/weidai11/cryptopp
+[submodule "extern/cryptopp-cmake"]
+	path = extern/cryptopp-cmake
+	url = https://github.com/noloader/cryptopp-cmake
+[submodule "extern/spdlog"]
+	path = extern/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "extern/rapidyaml"]
+	path = extern/rapidyaml
+	url = https://github.com/biojppm/rapidyaml
+[submodule "extern/libevent"]
+	path = extern/libevent
+	url = https://github.com/libevent/libevent.git
+[submodule "extern/flatbuffers"]
+	path = extern/flatbuffers
+	url = https://github.com/google/flatbuffers
