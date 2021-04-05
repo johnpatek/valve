@@ -16,9 +16,17 @@ public:
     
     ~controller();
 
-    void valve_open();
+    template<class Rep,class Period>
+    void valve_open(std::chrono::duration<Rep,Period> timeout)
+    {
 
-    void valve_close();
+    }
+
+    template<class Rep,class Period>
+    void valve_close(std::chrono::duration<Rep,Period> timeout)
+    {
+        
+    }
 
     void valve_status(std::string& status);
 

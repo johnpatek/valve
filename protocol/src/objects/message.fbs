@@ -1,14 +1,52 @@
 namespace valve.protocol.internal;
 
-enum request_type: int 
-{
 
+table open_request
+{
+    timeout: uint64;
 }
 
+table close_request
+{
+    timeout: uint64;
+}
 
+table status_request
+{
+    verbose: bool;
+}
+
+table log_request
+{
+    count: int;
+}
+
+enum request_types: int 
+{
+    OpenRequest,
+    CloseRequest,
+    StatusRequest,
+    LogRequest
+}
+
+union request_payloads 
+{
+    open_request,
+    close_request,
+    status_request,
+    log_request
+}
+
+table request_frame
+{
+    type: request_types;
+    payload: request_payloads; 
+}
 
 enum response_type : int
 {
-    OkResponse,
-    ErrorResponse    
+    OpenResponse,
+    CloseResponse,
+    StatusResponse,
+    LogResponse
 }
