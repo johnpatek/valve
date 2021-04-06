@@ -1,6 +1,5 @@
 namespace valve.protocol.internal;
 
-
 table open_request
 {
     timeout: uint64;

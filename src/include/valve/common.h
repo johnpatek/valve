@@ -14,7 +14,15 @@ namespace valve
     using socket_type = int;
 #endif
     const std::string SOCKET_NAME = "valve.sock";
-    const std::string SOCKET_PATH = "\0" + SOCKET_NAME;
+    const std::string SOCKET_PATH = "/tmp/" + SOCKET_NAME;
+
+    enum peer_types
+    {
+        CLIENT,
+        SOCKET
+    };
+
+    socket_type open_unix_socket(int peer_type);
 }
 
 #endif

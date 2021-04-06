@@ -51,12 +51,12 @@ board::board(int numbering_system)
 
 int digital_read(int pin)
 {
-
+    return digitalRead(pin);
 }
 
 void digital_write(int pin, int value)
 {
-
+    digitalWrite(pin,value);
 }
 
 
