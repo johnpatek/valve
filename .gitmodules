@@ -13,6 +13,6 @@
 [submodule "extern/libevent"]
 	path = extern/libevent
 	url = https://github.com/libevent/libevent.git
-[submodule "extern/flatbuffers"]
-	path = extern/flatbuffers
-	url = https://github.com/google/flatbuffers
+[submodule "extern/capnproto"]
+	path = extern/capnproto
+	url = https://github.com/capnproto/capnproto.git
