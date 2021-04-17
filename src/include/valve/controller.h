@@ -5,36 +5,40 @@
 namespace valve
 {
 
+using response_callback_type = std::function<void(bool,const std::string&)>;
+
 class controller
 {
 public:
-    controller(const std::string& name);
-    
+    controller();
+
     controller(const controller& copy) = delete;
 
-    controller(controller&& move);
-    
-    ~controller();
+    controller(controller&& move) = default;
 
-    template<class Rep,class Period>
-    void valve_open(std::chrono::duration<Rep,Period> timeout)
-    {
+    void valve_open(response_callback_type response_callback);
 
-    }
+    void valve_close(response_callback_type response_callback);
 
-    template<class Rep,class Period>
-    void valve_close(std::chrono::duration<Rep,Period> timeout)
-    {
-        
-    }
+    void valve_status(response_callback_type response_callback);
 
-    void valve_status(std::string& status);
-
-    void valve_log(std::vector<std::string>& messages, size_t count);
+    void valve_log(response_callback_type response_callback);
 
 private:
-    socket_type _socket;
-    std::string _name;
+    template<int RequestType> void valve_request(
+        response_callback_type on_response)
+    {
+        protocol::request request(RequestType);
+        protocol::response response;
+        process(request,response);
+        on_response(
+            response.is_good(),
+            response.get_message());
+    }
+
+    void process(
+        const protocol::request& request, 
+        protocol::response& response);
 };
 
 }

@@ -8,13 +8,14 @@ static void print_help();
 
 int main(int argc, char ** argv)
 {
-
+    
+    print_help();
     return 0;
 }
 
 void print_help()
 {
-    std::cerr << "valvectl - Command line interface for interacting with valved" 
+    std::cerr << "valvectl - Command line interface for interacting with valve daemon" 
               << std::endl
               << std::endl
               << "open" << std::endl;

@@ -8,8 +8,4 @@ set(EXTERN_ROOT ${CMAKE_SOURCE_DIR}/extern/build/install)
 set(EXTERN_INCLUDE ${EXTERN_ROOT}/include)
 set(EXTERN_LIB ${EXTERN_ROOT}/lib)
 
-
-
-
-
 add_subdirectory(src)
