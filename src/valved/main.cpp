@@ -12,14 +12,18 @@ int main(int argc, char ** argv)
         [&](bool& status,std::string& message)
         {
             status = true;
+            std::cerr << pin->get() << std::endl;
             pin->set(true);
+            std::cerr << pin->get() << std::endl;
         });
 
     valve::close_callback_type close_callback(
         [&](bool& status,std::string& message)
         {
             status = true;
+            std::cerr << pin->get() << std::endl;
             pin->set(false); 
+            std::cerr << pin->get() << std::endl;
         });
 
     valve::stat_callback_type stat_callback(
