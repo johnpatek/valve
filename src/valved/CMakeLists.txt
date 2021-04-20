@@ -5,4 +5,10 @@ add_executable(valved ${VALVED_SOURCES})
 target_include_directories(
     valved 
     PRIVATE 
-    ${VALVE_INCLUDE})
+    ${VALVE_INCLUDE}
+    ${EXTERN_INCLUDE})
+
+target_link_libraries(
+    valved 
+    valve
+    ${LIBRPIGPIO})

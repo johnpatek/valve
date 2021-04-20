@@ -22,3 +22,6 @@
 [submodule "extern/json"]
 	path = extern/json
 	url = https://github.com/nlohmann/json
+[submodule "extern/jsoncpp"]
+	path = extern/jsoncpp
+	url = https://github.com/open-source-parsers/jsoncpp

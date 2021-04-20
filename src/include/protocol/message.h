@@ -1,3 +1,6 @@
+#ifndef __PROTOCOL_MESSAGE_H__
+#define __PROTOCOL_MESSAGE_H__
+
 #include <valve/common.h>
 
 namespace protocol
@@ -7,7 +10,7 @@ enum commands
 {
     OPEN,
     CLOSE,
-    STATUS,
+    STAT,
     LOG
 };
 
@@ -24,13 +27,15 @@ public:
 
     request(request&& move) = default;
 
+    bool has_command() const;
+
     int get_command() const;
 
     void set_command(int command);
 
     void parse(const uint8_t * const data, size_t size);
 
-    std::string&& dump() const;   
+    std::string dump() const;   
 
 private:
     valve::unique_opaque _data;
@@ -43,15 +48,21 @@ public:
 
     response(bool status, const std::string& message);
 
+    response(bool status, std::string&& message);
+
     response(const uint8_t * const data, size_t size);
 
-    response(const response& copy);
+    response(const response& copy) = delete;
 
-    response(response&& move);
+    response(response&& move) = default;
+
+    bool has_status() const;
 
     bool get_status() const;
 
     void set_status(bool status);
+
+    bool has_message() const;
 
     std::string get_message() const;
 
@@ -59,14 +70,14 @@ public:
 
     void set_message(std::string&& message);
 
-    const std::string& get_message_view() const;
-
     void parse(const uint8_t * const data, size_t size);
 
-    std::string&& dump() const;
+    std::string dump() const;
 
 private:
     valve::unique_opaque _data;
 };
 
 }
+
+#endif

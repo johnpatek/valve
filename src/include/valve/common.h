@@ -7,13 +7,14 @@
 #include <map>
 #include <thread>
 #include <vector>
+#include <signal.h>
+#include <cstdint>
 
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/un.h>
 #include <unistd.h>
 
-#include <protocol/message.h>
 
 namespace valve
 {
@@ -26,16 +27,10 @@ namespace valve
         const socket_type>(-1);
     const std::string SOCKET_NAME = "valve.sock";
     const std::string SOCKET_PATH = "/tmp/" + SOCKET_NAME;
-
-    enum peer_types
-    {
-        CLIENT,
-        SERVER
-    };
-
+    
     using unique_opaque = std::unique_ptr<void,std::function<void(void*)>>;
 
-    socket_type open_unix_socket(int peer_type);
+    socket_type open_unix_socket();
 }
 
 #endif

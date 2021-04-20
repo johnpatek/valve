@@ -10,5 +10,6 @@ target_include_directories(
 
 target_link_libraries(
     valve
-    valveprotocol)
+    valveprotocol
+    ${LIBEVENT})
 
