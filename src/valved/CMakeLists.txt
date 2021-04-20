@@ -11,4 +11,5 @@ target_include_directories(
 target_link_libraries(
     valved 
     valve
-    ${LIBRPIGPIO})
+    ${LIBRPIGPIO}
+    ${PTHREAD})
