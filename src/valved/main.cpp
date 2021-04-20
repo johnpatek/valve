@@ -11,19 +11,30 @@ int main(int argc, char ** argv)
     valve::open_callback_type open_callback(
         [&](bool& status,std::string& message)
         {
-            status = true;
-            std::cerr << pin->get() << std::endl;
-            pin->set(true);
-            std::cerr << pin->get() << std::endl;
+            if(!pin->get())
+            {
+                pin->set(true);
+                status = true;    
+            }
+            else
+            {
+                message = "Valve is already open.";
+            }
         });
 
     valve::close_callback_type close_callback(
         [&](bool& status,std::string& message)
         {
-            status = true;
-            std::cerr << pin->get() << std::endl;
-            pin->set(false); 
-            std::cerr << pin->get() << std::endl;
+            if(pin->get())
+            {
+                status = true;
+                pin->set(false);
+            }
+            else
+            {
+                message = "Valve is already closed.";
+            }
+
         });
 
     valve::stat_callback_type stat_callback(
