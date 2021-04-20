@@ -13,15 +13,9 @@
 [submodule "extern/libevent"]
 	path = extern/libevent
 	url = https://github.com/libevent/libevent.git
-[submodule "extern/capnproto"]
-	path = extern/capnproto
-	url = https://github.com/capnproto/capnproto.git
 [submodule "rpi-gpio"]
 	path = extern/rpi-gpio
 	url = https://github.com/johnpatek/rpi-gpio
-[submodule "extern/json"]
-	path = extern/json
-	url = https://github.com/nlohmann/json
 [submodule "extern/jsoncpp"]
 	path = extern/jsoncpp
 	url = https://github.com/open-source-parsers/jsoncpp

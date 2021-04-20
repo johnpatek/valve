@@ -13,8 +13,8 @@ int main(int argc, char ** argv)
         {
             if(!pin->get())
             {
-                pin->set(true);
-                status = true;    
+                status = true;
+                pin->set(true);    
             }
             else
             {
