@@ -1,20 +1,20 @@
 #include <valve/host.h>
-#include "board.h"
+#include "digital_pin.h"
 #include "config.h"
 #include "log.h"
 
 int main(int argc, char ** argv)
 {
     std::shared_ptr<valve::host> host;
-    bool open(false);
-
+    std::shared_ptr<digital_pin> pin;
+ 
     valve::open_callback_type open_callback(
         [&](bool& status,std::string& message)
         {
-            if(!open)
+            if(!pin.get())
             {
                 status = true;
-                open = true;
+                pin->set(true);
             }
             else
             {
@@ -25,10 +25,10 @@ int main(int argc, char ** argv)
     valve::close_callback_type close_callback(
         [&](bool& status,std::string& message)
         {
-            if(open)
+            if(pin.get())
             {
                 status = true;
-                open = false;
+                pin->set(false);
             }
             else
             {
@@ -40,7 +40,7 @@ int main(int argc, char ** argv)
         [&](bool& status, std::string& message)
         {
             status = true;
-            message = open?"Open":"Closed";
+            message = pin->get()?"Open":"Closed";
         });
 
     valve::log_callback_type log_callback(
@@ -57,6 +57,8 @@ int main(int argc, char ** argv)
             close_callback,
             stat_callback,
             log_callback);
+
+        pin = std::make_shared<digital_pin>(21);
 
         host->start();
     }
