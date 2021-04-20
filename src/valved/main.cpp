@@ -11,29 +11,15 @@ int main(int argc, char ** argv)
     valve::open_callback_type open_callback(
         [&](bool& status,std::string& message)
         {
-            if(!pin.get())
-            {
-                status = true;
-                pin->set(true);
-            }
-            else
-            {
-                message = "Valve is already open";
-            }
+            status = true;
+            pin->set(true);
         });
 
     valve::close_callback_type close_callback(
         [&](bool& status,std::string& message)
         {
-            if(pin.get())
-            {
-                status = true;
-                pin->set(false);
-            }
-            else
-            {
-                message = "Valve is already closed";
-            }
+            status = true;
+            pin->set(false); 
         });
 
     valve::stat_callback_type stat_callback(
