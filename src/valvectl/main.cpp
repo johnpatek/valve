@@ -55,7 +55,10 @@ static void response_callback(bool status, const std::string& message)
 {
     if(!status)
     {
-        std::cerr << "Error: ";
+        std::cerr << "Error: " << message;
     }
-    std::cerr << message <<std::endl;
+    else
+    {
+        std::cout << message << std::endl;
+    }
 }

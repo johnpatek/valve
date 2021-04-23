@@ -13,3 +13,5 @@ target_link_libraries(
     valve
     ${LIBRPIGPIO}
     ${PTHREAD})
+
+install(TARGETS valved DESTINATION /usr/bin)

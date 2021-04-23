@@ -40,7 +40,9 @@ private:
 
     unique_opaque _event_connection_listener;
 
-    unique_opaque _signal_handler;
+    unique_opaque _interrupt_handler;
+
+    unique_opaque _terminate_handler;
 
     open_callback_type _open_callback;
 

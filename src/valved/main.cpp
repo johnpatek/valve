@@ -1,40 +1,50 @@
+#include <list>
 #include <valve/host.h>
+#include <toml.hpp>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/syslog_sink.h>
+#include <spdlog/fmt/fmt.h>
 #include "digital_pin.h"
-#include "config.h"
-#include "log.h"
 
 int main(int argc, char ** argv)
 {
+    std::shared_ptr<spdlog::logger> system_logger;
+    std::shared_ptr<toml::value> config;
+    std::string log_path;
+    std::shared_ptr<spdlog::logger> valve_logger;
     std::shared_ptr<valve::host> host;
     std::shared_ptr<digital_pin> pin;
- 
+
     valve::open_callback_type open_callback(
-        [&](bool& status,std::string& message)
+        [&](bool& status, std::string& message)
         {
             if(!pin->get())
             {
                 status = true;
-                pin->set(true);    
+                pin->set(true);
+                valve_logger->info("Valve opened");    
             }
             else
             {
                 message = "Valve is already open.";
+                valve_logger->error(message);
             }
         });
 
     valve::close_callback_type close_callback(
-        [&](bool& status,std::string& message)
+        [&](bool& status, std::string& message)
         {
             if(pin->get())
             {
                 status = true;
                 pin->set(false);
+                valve_logger->info("Valve closed");
             }
             else
             {
                 message = "Valve is already closed.";
+                valve_logger->error(message);
             }
-
         });
 
     valve::stat_callback_type stat_callback(
@@ -48,29 +58,35 @@ int main(int argc, char ** argv)
         [&](bool& status,std::string& message)
         {
             status = true;
-            message = "Log not implemented";
+            std::list<std::string> log_entries;
+            std::stringstream log_dump;
+            std::fstream log_file(log_path,std::ios::in);
+            for(std::string line_buffer;std::getline(log_file, line_buffer);)
+            {
+                log_entries.push_back(line_buffer);
+                if(log_entries.size() > 10)
+                {
+                    log_entries.pop_front();
+                }
+            }
+            for(const std::string& entry : log_entries)
+            {
+                log_dump << entry << std::endl;
+            }
+            message = log_dump.str();
         });
 
-    try
+    system_logger = spdlog::syslog_logger_mt("system_logger");
+
+    if(argc < 2)
     {
-        host = std::make_shared<valve::host>(
-            open_callback,
-            close_callback,
-            stat_callback,
-            log_callback);
 
-        pin = std::make_shared<digital_pin>(21);
-
-        host->start();
     }
-    catch(const std::exception& e)
+    else
     {
-        std::cerr << e.what() << std::endl;
-        if(host.get() != nullptr)
-        {
-            host->stop();
-        }
+
     }
 
+    
     return 0;
 }

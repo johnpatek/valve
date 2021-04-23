@@ -8,6 +8,6 @@ public:
     bool get() const;  
     void set(bool value);
 private:
-    GPIO::GPIOBase _base;
+    //GPIO::GPIOBase _base;
     int _pin;
 };

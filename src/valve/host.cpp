@@ -91,7 +91,7 @@ host::host(
         throw std::runtime_error("Socket chmod failed");
     }
 
-    _signal_handler = unique_opaque(
+    _interrupt_handler = unique_opaque(
         evsignal_new(
             reinterpret_cast<event_base*>(
                 _event_base.get()),
@@ -103,10 +103,30 @@ host::host(
             event_free(
                 reinterpret_cast<event*>(data));
         });
+    
+    _terminate_handler = unique_opaque(
+        evsignal_new(
+            reinterpret_cast<event_base*>(
+                _event_base.get()),
+            SIGTERM, 
+            signal_callback, 
+            this),
+        [](void * data)
+        {
+            event_free(
+                reinterpret_cast<event*>(data));
+        });
 
     if(event_add(
         reinterpret_cast<event*>(
-            _signal_handler.get()),nullptr) < 0)
+            _interrupt_handler.get()),nullptr) < 0)
+    {
+        throw std::runtime_error("Failed to create signal handler");
+    }
+
+    if(event_add(
+        reinterpret_cast<event*>(
+            _terminate_handler.get()),nullptr) < 0)
     {
         throw std::runtime_error("Failed to create signal handler");
     }
@@ -236,8 +256,9 @@ void listener_callback(
 {
     event_base * base;    
     bufferevent * buffer_event;
-
+    
     base = evconnlistener_get_base(listener);
+    
     buffer_event = bufferevent_socket_new(
         base,
         socket, 
@@ -249,6 +270,7 @@ void listener_callback(
         nullptr,
         event_callback,
         server);
+
     bufferevent_enable(
         buffer_event, 
         EV_WRITE | EV_READ);

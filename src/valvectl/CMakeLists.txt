@@ -9,3 +9,5 @@ target_include_directories(
     ${PTHREAD})
 
 target_link_libraries(valvectl valve)
+
+install(TARGETS valvectl DESTINATION /usr/bin)
