@@ -1,0 +1,9 @@
+[Unit]
+Description=Valve daemon
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/valved /etc/valve/config.toml
+
+[Install]
+WantedBy=multi-user.target

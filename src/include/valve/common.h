@@ -1,8 +1,20 @@
 #ifndef __VALVE_COMMON_H__
 #define __VALVE_COMMON_H__
+#include <fstream>
+#include <functional>
 #include <iostream>
 #include <iomanip>
+#include <map>
+#include <thread>
 #include <vector>
+#include <signal.h>
+#include <cstdint>
+
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/un.h>
+#include <unistd.h>
+
 
 namespace valve
 {
@@ -11,8 +23,14 @@ namespace valve
 #else
     using socket_type = int;
 #endif
+    const socket_type INVALID_SOCKET = static_cast<
+        const socket_type>(-1);
     const std::string SOCKET_NAME = "valve.sock";
-    const std::string SOCKET_PATH = "\0" + SOCKET_NAME;
+    const std::string SOCKET_PATH = "/tmp/" + SOCKET_NAME;
+    
+    using unique_opaque = std::unique_ptr<void,std::function<void(void*)>>;
+
+    socket_type open_unix_socket();
 }
 
 #endif

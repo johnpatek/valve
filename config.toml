@@ -1,0 +1,5 @@
+[valved]
+THREADS = 4
+LOG_PATH = "/var/log/valve.log"
+GPIO_PIN = 21
+SIMULATE = true
